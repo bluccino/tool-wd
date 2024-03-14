@@ -1,33 +1,35 @@
 #!/bin/bash
 # wd.sh - change working directory
 
-   if [ "$*" == "-?" ] || [ "$*" == "--help" ]; then
+   if [ "$*" == "-?" ] || [ "$*" == "--help" ] || [ "$*" == "--?" ]; then
       ec -g "usage: change working directory (version `wd.sh --version`)"
-      echo  '  wd <topic>          # work with environment'
-      echo  '  wd                  # cd $WORKDIR'
-      echo  '  wd .                # set WORKDIR=`pwd`'
-      echo  '  wd ..               # cd to parent directory and wd .'
-      echo  '  wd ...              # cd to git home directory'
-      echo  '  wd <n>              # cd to child or sibling folder <n>-...'
-      echo  '  wd -l               # list wd labels'
-      echo  '  wd -! lab: info     # define label for current directory'
-      echo  '  wd -?               # show usage'
-      echo  '  wd --help           # comprehensive help'
-      echo  '  wd --version        # print version'
+      echo  '  wd <topic>               # work with environment'
+      echo  '  wd                       # cd $WORKDIR'
+      echo  '  wd .                     # set WORKDIR=`pwd`'
+      echo  '  wd ..                    # cd to parent directory and wd .'
+      echo  '  wd ...                   # cd to git home directory'
+      echo  '  wd <n>                   # cd to child or sibling folder <n>-...'
+      echo  '  wd -l                    # list wd labels'
+      echo  '  wd -! lab: info          # define label for current directory'
+      echo  '  wd -?                    # show usage'
+      echo  '  wd --help                # comprehensive help'
+      echo  '  wd --version             # print version'
       echo  ''
       ec -g 'multiple args:'
-      echo  '  wd 1 5              # change to 01-*/05-*'
-      echo  '  wd .. ..            # change to ../..'
-      echo  '  wd ... lessons      # change to lessons in repo home directory'
+      echo  '  wd 1 5                   # change to 01-*/05-*'
+      echo  '  wd .. ..                 # change to ../..'
+      echo  '  wd ... lessons           # change to lessons in repo home directory'
 
-      if [ "$*" == "--help" ]; then
+      if [ "$*" != "-?" ]; then
          echo ''
+         ec -g 'define an alias:'
+         echo  "  alias wd='source wd.sh'  # consider to add to bash profile/resource script"
          ec -g 'define label:'
-         echo "  wd -! lab: 'abc project'  # define label for current directory"
-         echo "  wd -! lab: 'abc project' <dir>  # define label for directory <dir>"
-         echo "  wd -! pd:  'picolo develop repo' ~/Git/Picolo/picolo-develop"
-         echo "  wd -! pl:  'picolo lessons' ~/Git/Picolo/picolo-develop/lessons"
-         echo "  wd -! bin: 'local binary directory' ~/bin"
+         echo  "  wd -! lab: 'abc project'  # define label for current directory"
+         echo  "  wd -! lab: 'abc project' <dir>  # define label for directory <dir>"
+         echo  "  wd -! pd:  'picolo develop repo' ~/Git/Picolo/picolo-develop"
+         echo  "  wd -! pl:  'picolo lessons' ~/Git/Picolo/picolo-develop/lessons"
+         echo  "  wd -! bin: 'local binary directory' ~/bin"
       fi
       return 0 2>/dev/null || exit 0  # safe return/exit
    fi
