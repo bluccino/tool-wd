@@ -69,7 +69,7 @@
    _DIGITS=$_DIGITS' 90 91 92 93 94 95 96 97 98 99'
 
    if [ -d $_PREFIX$1-* ]; then
-      ec -g $_PREFIX$1-*
+      #ec -g $_PREFIX$1-*
       cd $_PREFIX$1-*
       source wd.sh `pwd`
 
