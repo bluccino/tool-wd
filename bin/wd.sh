@@ -71,6 +71,11 @@
       cd $_PREFIX$1-*
       source wd.sh `pwd`
 
+      shift
+      if [ "$*" != "" ]; then  # repeat recursively ?
+         source wd.sh $*
+      fi
+
 		  unset _DIGITS
 		  unset _DIGIT
 		  unset _PREFIX
