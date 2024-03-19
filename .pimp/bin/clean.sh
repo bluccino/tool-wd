@@ -57,6 +57,8 @@
 			fi
 
       rm -rf $_ROOT/test/build
+      rm -f $_ROOT/.pimp/bin/ec
+      rm -f $_ROOT/.pimp/bin/idb
 
       unset _ANS
       unset _ROOT
