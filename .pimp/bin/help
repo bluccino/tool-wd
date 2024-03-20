@@ -2,6 +2,7 @@
 # help (local help on workspace @pimp)
 
 ec -g "help on workspace @pimp"
+echo  "  wd        change working directory"
 echo  "  ec        echo colored text"
 echo  "  idb       info database"
 echo  "  ve        activate virtual environment (persistent)"
