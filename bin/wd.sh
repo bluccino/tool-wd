@@ -3,7 +3,7 @@
 
    if [ "$*" == "-?" ] || [ "$*" == "--help" ] || [ "$*" == "--?" ]; then
       ec -g "usage: change working directory (version `wd.sh --version`)"
-      echo  '  wd <topic>               # work with environment'
+      echo  '  wd <topic>               # verbose change directory'
       echo  '  wd                       # cd $WORKDIR'
       echo  '  wd .                     # set WORKDIR=`pwd`'
       echo  '  wd ..                    # cd to parent directory and wd .'
