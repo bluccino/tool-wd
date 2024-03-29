@@ -1,2 +1,5 @@
 .west
 deps
+@wd
+.pimp/bin/ec
+.pimp/bin/idb
