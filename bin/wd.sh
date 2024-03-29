@@ -39,7 +39,7 @@
 #===============================================================================
 
    if [ "$*" == "--version" ] || [ "$*" == "--v" ]; then
-      echo "1.0.14"
+      echo "1.0.15"
       return 0 2>/dev/null || exit 0  # safe return/exit
    fi
 
@@ -127,13 +127,50 @@
 #===============================================================================
 
    if [ "$1" == "..." ]; then
-      cd `gih`
+      _TOP=`bash wd.sh ---top .west`
+      if [ "$_TOP" == "" ]; then
+         _TOP=`bash wd.sh ---top .git`
+         if [ "$_TOP" == "" ]; then
+            ec -r "command wd ... ignored (neither .west nor .git directory found in upward tree)" >&2
+            unset _TOP
+            return 1 2>/dev/null || exit 1  # safe return/exit
+         fi
+      fi
+
+         # so we found a topdir
+
+      cd $_TOP
+      unset _TOP
+
       ec -y "working in: `pwd`"
       ls
+
+         # process rest of command line
 
       shift
       if [ "$*" != "" ]; then
         source wd.sh $*
+      fi
+      return 0 2>/dev/null || exit 0  # safe return/exit
+   fi
+
+#===============================================================================
+# wd ---top <dir>  # search top directory, containing <dir> folder
+# wd ---top .git   # search top directory, containing .git folder
+# wd ---top .west  # search top directory, containing .west folder
+#===============================================================================
+
+   if [ "$1" == "---top" ]; then # && [ "$2" != "" ] && [ "$3" == "" ]; then
+      #ec -g `pwd`": wd $*" >&2
+      if [ -d "$2" ]; then
+         echo `pwd`
+      else
+         if [ "`pwd`" == "/" ]; then
+            exit 1
+         else
+            cd ..
+            bash wd.sh $*
+         fi
       fi
       return 0 2>/dev/null || exit 0  # safe return/exit
    fi
