@@ -30,6 +30,10 @@
          echo  "  wd -! pd:  'picolo develop repo' ~/Git/Picolo/picolo-develop"
          echo  "  wd -! pl:  'picolo lessons' ~/Git/Picolo/picolo-develop/lessons"
          echo  "  wd -! bin: 'local binary directory' ~/bin"
+         echo ''
+         ec -g 'environment variables:'
+         echo  '  WORKDIR:   path of current working directory'
+         echo  '  WORKIDB:   path of info database (storing label related info)'
       fi
       return 0 2>/dev/null || exit 0  # safe return/exit
    fi
@@ -39,7 +43,7 @@
 #===============================================================================
 
    if [ "$*" == "--version" ] || [ "$*" == "--v" ]; then
-      echo "1.0.15"
+      echo "1.0.15a"
       return 0 2>/dev/null || exit 0  # safe return/exit
    fi
 
@@ -218,7 +222,8 @@
    _LABEL=${1%":"}
 
    if [ "$1" != "$_LABEL" ]; then
-      _DIR=`idb -r $ETC/workdir $_LABEL dir`
+      if [ "$WORKIDB" != "" ]; then _WORKIDB=$WORKIDB; else _WORKIDB=$ETC; fi
+      _DIR=`idb -r $_WORKIDB/workdir $_LABEL dir`
 
       if [ "$_DIR" != "" ]; then
          #ec -g "good directory: $_DIR"
@@ -230,6 +235,7 @@
       fi
       unset _DIR
       unset _LABEL
+      unset _WORKIDB
       return 0 2>/dev/null || exit 0  # safe return/exit
    fi
 
@@ -240,19 +246,21 @@
 
 	if [ "$1" == "-!" ] && [ "$2" != "" ] && [ "$3" != "" ] \
                       && [ "$5" == "" ]; then
-     if [ "$ETC" == "" ]; then
+     if [ "$WORKIDB" != "" ]; then _WORKIDB=$WORKIDB; else _WORKIDB=$ETC; fi
+
+     if [ "$_WORKIDB" == "" ]; then
         ec -r "cannot add workdir label: wd $*"
-        echo  '  environment variable ETC is not defined'
-        echo  '  suggestion: $ export ETC=~/etc   # or something similar'
+        echo  '  environment variables WORKIDB, ETC are not defined'
+        echo  '  suggestion: $ export WORKIDB=~/WORKIDB   # or something similar'
         return 0 2>/dev/null || exit 0  # safe return/exit
      fi
 
-     if [ ! -d "$ETC" ]; then
-        ec -r "no directory: ETC=$ETC"
+     if [ ! -d "$_WORKIDB" ]; then
+        ec -r "no directory: WORKIDB=$_WORKIDB"
         return 0 2>/dev/null || exit 0  # safe return/exit
      fi
 
-     _IDB=$ETC/workdir
+     _IDB=$_WORKIDB/workdir
      if [ ! -d $_IDB ]; then
         idb -c $_IDB      # create workdir info database
      fi
@@ -273,6 +281,7 @@
      unset _IDB
      unset _LABEL
      unset _IDB
+     unset _WORKIDB
      return 0 2>/dev/null || exit 0  # safe return/exit
   fi
 
@@ -281,19 +290,21 @@
 #===============================================================================
 
 	if [ "$*" == "-l" ] || [ "$*" == "---list-idb" ]; then
-     if [ "$ETC" == "" ]; then
+     if [ "$WORKIDB" != "" ]; then _WORKIDB=$WORKIDB; else _WORKIDB=$ETC; fi
+
+     if [ "$_WORKIDB" == "" ]; then
         ec -r "cannot access workdir database: wd $*"
-        echo  '  environment variable ETC is not defined'
+        echo  '  environment variable WORKIDB is not defined'
         return 0 2>/dev/null || exit 0  # safe return/exit
      fi
 
-     if [ ! -d "$ETC" ]; then
-        ec -r "no directory: ETC=$ETC"
+     if [ ! -d "$_WORKIDB" ]; then
+        ec -r "no directory: WORKIDB=$_WORKIDB"
         return 0 2>/dev/null || exit 0  # safe return/exit
      fi
 
      ec -g 'wd labels:'
-     _IDB=$ETC/workdir
+     _IDB=$_WORKIDB/workdir
      for _KEY in `ls $_IDB`
      do
         _INFO=`idb -r $_IDB $_KEY info`
@@ -306,6 +317,7 @@
      unset _INFO
      unset _DIR
      unset _IDB
+     unset _WORKIDB
      return 0 2>/dev/null || exit 0  # safe return/exit
   fi
 
