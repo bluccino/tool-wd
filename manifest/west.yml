@@ -9,5 +9,5 @@ manifest:
 
     - name: tool-idb
       url: https://github.com/bluccino/tool-idb.git
-      revision: 1.0.0
+      revision: 1.0.1
       path: deps/tool-idb
