@@ -6,3 +6,5 @@ unalias de
 #unalias ve  # intentionally commented
 unalias clean
 unalias ?
+
+WORKIDB=$OLD_WORKIDB
