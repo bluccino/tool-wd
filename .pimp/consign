@@ -1,2 +1,3 @@
 deps/tool-ec/bin/ec
 deps/tool-idb/bin/idb
+bin/wd.sh
