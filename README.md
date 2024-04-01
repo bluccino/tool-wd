@@ -7,7 +7,7 @@
 * verbose navigation through file tree
 * recognize number arguments as directory number prefixes
 * memorize current directory as current working directory
-* navigate current working directory
+* navigate to current working directory
 * navigate to git home directory
 * memorize current working directory by custom label
 * list custom labels
@@ -17,7 +17,7 @@
 
 # Pre-Requisites
 
-The only pre-requisite to install and run `wd` is a `bash` (shell) environment, as it is standard on Linux, Mac-OS and Windows/WSL platforms. 
+The only pre-requisite to install and run `wd` is a `bash` (shell) environment, as it is standard on Linux, Mac-OS and Windows/WSL platforms.
 
 Installation can be done by downloading and unzipping a git repository
 and following the instructions in the next section. `git` is no absolute requirement, but helpful when cloning the installation repository, and necessary if all steps of the tutorial are intented to be followed.
@@ -35,7 +35,7 @@ either download load the repository `tool-wd` or use `git` to clone.
 
 ```
     path-to $ git clone https://github.com/bluccino/tool-wd.git
-``` 
+```
 
 ## Step 2: Install `wd`
 
@@ -46,10 +46,10 @@ In the repository's root directory source script `bin/install` by passing argume
     tool-wd $ source bin/install <bin>
 ```
 
-This installation procedure creates a local virtual environment `@tool-wd` with temporary tools like `pimp` and `west` in order to pull the right dependencies from github and to perform the installation. 
+This installation procedure creates a local virtual environment `@tool-wd` with temporary tools like `pimp` and `west` in order to pull the right dependencies from github and to perform the installation.
 
 
-## Step 3: Define a `wd` Alias 
+## Step 3: Define a `wd` Alias
 
 The workhorse of tool `wd` is the `bash` script `wd.sh` which always needs to be sourced (with either `source wd.sh ...`or `. wd.sh ...`). To deal with the cute shorthand `wd` an alias definition
 
@@ -94,7 +94,7 @@ dummy files.
     01-pico $ for F in `ls`; do touch $F/$F.dummy; done
 ```
 
-Let us navigate up one level in the file tree. Again `wd` shows us the path of the current directory, as well as the current directory's contents. 
+Let us navigate up one level in the file tree. Again `wd` shows us the path of the current directory, as well as the current directory's contents.
 
 ```
     01-pico $ wd ..            # use 'wd' to navigate up
@@ -108,7 +108,7 @@ So we have two possibilities of navigation through the file tree.
 ~~~
     NOTE:
        1) using `cd` for silent navigation
-       2) using `wd` for verbose navigation 
+       2) using `wd` for verbose navigation
 ~~~
 
 ## Recognize Number Arguments as Directory Number Prefixes
@@ -131,9 +131,9 @@ Now change the directory to subfolder `03-gatt`.
     working in: .../sample-tree/02-ble/03-gatt
     03-gatt.dummy
 ```
-    
+
 Let's do a trial and invoke `wd 1`:
-    
+
 ```
     03-gatt $ wd 1    # just a trial
     working in: .../sample-tree/02-ble/01-adv
@@ -152,7 +152,7 @@ Obviously we navigate now to sibling folder 01-adv, since the current directory 
 ```
 
 Thus, we summarize the notable observation:    
-    
+
 ~~~
     NOTE:
        1) If the current directory has a child directory with prefix
@@ -162,10 +162,10 @@ Thus, we summarize the notable observation:
           '<n>.*' or '0<n>-*' then command 'wd <n>' will navigate to
           the sibling directory with related number prefix.
 ~~~
-    
-    
+
+
 ## Memorize Current Directory as Current Working Directory    
-    
+
 Command `wd .` memorizes the current directory as current working directory.
 
 ```
@@ -192,14 +192,14 @@ current working directory.
 
 
 ## Navigate to Git Home Directory
-    
+
 Command `wd ...` navigates to git home directory (which is recognized
 by containing the (hidden) subfolder `.git`.
 
 ```
     03-gatt $ wd ...    # navigate to git home directory
     working in: .../sample-tree
-    01-pico	02-ble 
+    01-pico	02-ble
 ```    
 
 Let us recap the file tree we are dealing with.
@@ -230,12 +230,12 @@ Let us recap the file tree we are dealing with.
         └── 03-gatt
 ```
 
-    
+
 ## Memorize Current Working Directory by Custom Label
 
 Assume, we want to provide labels `blink:`, `  for folders `01-pico/03-blink` and
-`02-ble/02-scan`. By applying multiple arguments, `wd` performs consecutive operations. 
-    
+`02-ble/02-scan`. By applying multiple arguments, `wd` performs consecutive operations.
+
 ```    
     sample-tree $ wd 1 3
     working in: .../sample-tree/01-pico
@@ -249,7 +249,7 @@ We will define now label `blink:` for directory `01-pico/03-blink'.
 ```
     03-blink $ wd -! blink: 'sample 01-pico/03-blink'
 ```
-For definition of the second folder we navigate to folder `02-ble/02-scan' 
+For definition of the second folder we navigate to folder `02-ble/02-scan'
 with `wd ... 2 2`.
 
 ```
@@ -294,10 +294,10 @@ With labels defined we can easily navigate between labeld directories, the  git 
     02-scan $ wd ...     # navigate to git home dir
     working in: .../sample-tree
     01-pico    02-ble
-    sample-tree $ wd     # navigate to current working directory 
+    sample-tree $ wd     # navigate to current working directory
     working in: .../sample-tree/02-ble/03-gatt
     03-gatt.dummy
-    03-gatt $ 
+    03-gatt $
 ```
 
 # Conclusions
