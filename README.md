@@ -8,7 +8,7 @@
 * recognize number arguments as directory number prefixes
 * memorize current directory as current working directory
 * navigate to current working directory
-* navigate to git home directory
+* navigate to workspace top / git home directory
 * memorize current working directory by custom label
 * list custom labels
 * navigate to labeled directory
