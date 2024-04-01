@@ -2,10 +2,11 @@
 # cleanup (cleanup script for virtual environment)
 
 echo '=== cleanup virtual environment ...'
-unalias wd
+
+eval $RESTORE_WD   # restore previous wd alias
+WORKIDB=$OLD_WORKIDB
+
 unalias de
 #unalias ve  # intentionally commented
 unalias clean
 unalias ?
-
-WORKIDB=$OLD_WORKIDB
