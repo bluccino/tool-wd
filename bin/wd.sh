@@ -7,7 +7,7 @@
       echo  '  wd                       # cd $WORKDIR'
       echo  '  wd .                     # set WORKDIR=`pwd`'
       echo  '  wd ..                    # cd to parent directory and wd .'
-      echo  '  wd ...                   # cd to git home directory'
+      echo  '  wd ...                   # cd to workspace topdir / git home directory'
       echo  '  wd <n>                   # cd to child or sibling folder <n>-...'
       echo  '  wd -l                    # list wd labels'
       echo  '  wd -! lab: info          # define label for current directory'
