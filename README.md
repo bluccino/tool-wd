@@ -1,4 +1,4 @@
-![Working Directory](etc/working-directory.jpg)
+![Working Directory](etc/wd.jpg)
 
 # Working Direcory
 
