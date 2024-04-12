@@ -11,6 +11,7 @@
       echo  '  wd <n>                   # cd to child or sibling folder <n>-...'
       echo  '  wd -l                    # list wd labels'
       echo  '  wd -L                    # list wd labels (including path)'
+      echo  '  wd -v                    # navigate to active virtual envronment folder'
       echo  '  wd -! lab: info          # define label for current directory'
       echo  '  wd -?                    # show usage'
       echo  '  wd --help                # comprehensive help'
@@ -44,7 +45,25 @@
 #===============================================================================
 
    if [ "$*" == "--version" ] || [ "$*" == "--v" ]; then
-      echo "1.0.16"
+      echo "1.0.17"
+      return 0 2>/dev/null || exit 0  # safe return/exit
+   fi
+
+#===============================================================================
+# wd -v  # navigate to active virtual environment folder
+#===============================================================================
+
+   if [ "$*" == "-v" ]; then
+      if [ "$VIRTUAL_ENV" == "" ]; then
+         ec -r "error: wd $*"
+         echo  '       no activated virtual environment'
+         return 1 2>/dev/null || exit 1  # safe return/exit
+      fi
+
+      cd $VIRTUAL_ENV
+      ec -y "working in: $(pwd)"
+      ls
+
       return 0 2>/dev/null || exit 0  # safe return/exit
    fi
 
@@ -112,7 +131,7 @@
    if [ "$*" == "." ]; then
       WORKDIR=`pwd`
       ec -g "change working directory: $WORKDIR"
-      ec -y "working in: `pwd`"
+      ec -y "working in: $(pwd)"
       ls
       return 0 2>/dev/null || exit 0  # safe return/exit
    fi
@@ -147,7 +166,7 @@
       cd $_TOP
       unset _TOP
 
-      ec -y "working in: `pwd`"
+      ec -y "working in: $(pwd)"
       ls
 
          # process rest of command line
@@ -186,7 +205,7 @@
 
    if [ "$*" == "" ]; then
       cd $WORKDIR
-      ec -y "working in: `pwd`"
+      ec -y "working in: $(pwd)"
       ls
       return 0 2>/dev/null || exit 0  # safe return/exit
    fi
@@ -210,7 +229,7 @@
       else
          #WORKDIR=`pwd`
          #ec -y "current working directory: $WORKDIR"
-         ec -y "working in: `pwd`"
+         ec -y "working in: $(pwd)"
          ls
       fi
 
@@ -288,6 +307,8 @@
 
 #===============================================================================
 # wd ---list-idb  # list labels of workdir info database
+# wd -l           # list labels of workdir info database
+# wd -L           # list labels of workdir info database with path
 #===============================================================================
 
 	if [ "$*" == "-l" ] || [ "$*" == "-L" ] || [ "$*" == "---list-idb" ]; then
