@@ -10,6 +10,7 @@
       echo  '  wd ...                   # cd to workspace topdir / git home directory'
       echo  '  wd <n>                   # cd to child or sibling folder <n>-...'
       echo  '  wd -l                    # list wd labels'
+      echo  '  wd -L                    # list wd labels (including path)'
       echo  '  wd -! lab: info          # define label for current directory'
       echo  '  wd -?                    # show usage'
       echo  '  wd --help                # comprehensive help'
@@ -43,7 +44,7 @@
 #===============================================================================
 
    if [ "$*" == "--version" ] || [ "$*" == "--v" ]; then
-      echo "1.0.15"
+      echo "1.0.16"
       return 0 2>/dev/null || exit 0  # safe return/exit
    fi
 
@@ -289,7 +290,7 @@
 # wd ---list-idb  # list labels of workdir info database
 #===============================================================================
 
-	if [ "$*" == "-l" ] || [ "$*" == "---list-idb" ]; then
+	if [ "$*" == "-l" ] || [ "$*" == "-L" ] || [ "$*" == "---list-idb" ]; then
      if [ "$WORKIDB" != "" ]; then _WORKIDB=$WORKIDB; else _WORKIDB=$ETC; fi
 
      if [ "$_WORKIDB" == "" ]; then
@@ -309,14 +310,20 @@
      if [ -d "$_IDB" ]; then
 	      for _KEY in `ls $_IDB`
 	      do
-	         _INFO=`idb -r $_IDB $_KEY info`
-	         _DIR=`idb -r $_IDB $_KEY dir`
+	         _INFO=$(idb -r $_IDB $_KEY info)
+	         _DIR=$(idb -r $_IDB $_KEY dir)
 
-	         echo "  $_KEY: $_INFO   ($_DIR)"
+           _LAB=$_KEY:'                              '
+           if [ "$*" == "-L" ]; then
+	            echo "  ${_LAB:0:12} $_INFO   ($_DIR)"
+           else
+	            echo "  ${_LAB:0:12} $_INFO"
+           fi
 	      done
      fi
 
      unset _KEY
+     unset _LAB
      unset _INFO
      unset _DIR
      unset _IDB
