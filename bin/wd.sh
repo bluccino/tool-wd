@@ -12,6 +12,7 @@
       echo  '  wd -l                    # list wd labels'
       echo  '  wd -L                    # list wd labels (including path)'
       echo  '  wd -v                    # navigate to active virtual envronment folder'
+      echo  '  wd -w                    # navigate to workspace folder with active venv'
       echo  '  wd -! lab: info          # define label for current directory'
       echo  '  wd -?                    # show usage'
       echo  '  wd --help                # comprehensive help'
@@ -45,7 +46,7 @@
 #===============================================================================
 
    if [ "$*" == "--version" ] || [ "$*" == "--v" ]; then
-      echo "1.0.17"
+      echo "1.0.18"
       return 0 2>/dev/null || exit 0  # safe return/exit
    fi
 
@@ -64,6 +65,16 @@
       ec -y "working in: $(pwd)"
       ls
 
+      return 0 2>/dev/null || exit 0  # safe return/exit
+   fi
+
+#===============================================================================
+# wd -w  # navigate to workspace folder with active venv
+#===============================================================================
+
+   if [ "$*" == "-w" ]; then
+      source wd.sh -v || exit
+      cd ..
       return 0 2>/dev/null || exit 0  # safe return/exit
    fi
 
