@@ -73,8 +73,16 @@
 #===============================================================================
 
    if [ "$*" == "-w" ]; then
-      source wd.sh -v || exit
-      cd ..
+      if [ "$VIRTUAL_ENV" == "" ]; then
+         ec -r "error: wd $*"
+         echo  '       no activated virtual environment'
+         return 1 2>/dev/null || exit 1  # safe return/exit
+      fi
+
+      cd $VIRTUAL_ENV/..
+      ec -y "working in: $(pwd)"
+      ls
+
       return 0 2>/dev/null || exit 0  # safe return/exit
    fi
 

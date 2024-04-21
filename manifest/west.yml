@@ -4,10 +4,8 @@ manifest:
   projects:
     - name: tool-ec
       url: https://github.com/bluccino/tool-ec.git
-      revision: 1.0.0
       path: deps/tool-ec
 
     - name: tool-idb
       url: https://github.com/bluccino/tool-idb.git
-      revision: 1.0.1
       path: deps/tool-idb
